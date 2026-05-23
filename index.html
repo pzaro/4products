@@ -4,27 +4,33 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zarkolia Health — Πρωτόκολλο Αναγέννησης & Αποκατάστασης</title>
+<!-- Εισαγωγή βιβλιοθήκης για μετατροπή HTML σε PNG -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 <style>
   @page { margin: 1.5cm; }
   body { font-family: 'Calibri', 'Helvetica', Arial, sans-serif; margin: 0; padding: 20px; background-color: #f4f7f6; color: #333; }
   
+  /* Container Layout */
   .export-container { max-width: 800px; margin: 0 auto; background-color: #ffffff; padding: 40px; border: 1px solid #dce4e0; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
   .header { text-align: center; margin-bottom: 35px; padding-bottom: 25px; border-bottom: 3px solid #1a5276; }
   
+  /* Flexbox για τα προϊόντα */
   .product-box { display: flex; gap: 20px; align-items: stretch; margin-bottom: 25px; padding: 20px; border-radius: 0 6px 6px 0; }
   .product-image-col { flex: 0 0 160px; display: flex; flex-direction: column; justify-content: flex-start; }
   
+  /* Στυλ εικόνων */
   .product-img { width: 100%; height: 160px; object-fit: contain; background-color: #ffffff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 5px; box-sizing: border-box; }
   
   .product-content-col { flex: 1; }
   .indications-list { margin: 10px 0 0 0; padding-left: 20px; font-size: 12px; line-height: 1.6; color: #444; }
   
+  /* Κουμπί Download */
   .action-buttons { text-align: center; margin-bottom: 20px; }
   .btn-download { background-color: #1a5276; color: #fff; border: none; padding: 12px 24px; font-size: 14px; font-weight: bold; border-radius: 6px; cursor: pointer; transition: background 0.3s; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
   .btn-download:hover { background-color: #2980b9; }
 
+  /* CSS για εκτύπωση / αποθήκευση εικόνας */
   @media print {
     body { background-color: #ffffff; padding: 0; }
     .export-container { box-shadow: none; border: none; padding: 0; margin-bottom: 0; }
@@ -35,30 +41,35 @@
 </head>
 <body>
 
+<!-- ΚΟΥΜΠΙ ΕΞΑΓΩΓΗΣ ΣΕ PNG -->
 <div class="action-buttons" id="ui-controls">
   <button class="btn-download" onclick="exportToPNG()">📥 Αποθήκευση ως PNG</button>
 </div>
 
+<!-- ΠΕΡΙΟΧΗ ΠΟΥ ΘΑ ΜΕΤΑΤΡΑΠΕΙ ΣΕ ΕΙΚΟΝΑ -->
 <div id="capture-area" class="export-container">
 
+  <!-- HEADER -->
   <div class="header">
     <h1 style="margin:0;font-size:32px;color:#1a5276;font-weight:900;letter-spacing:1px;">Zarkolia Health</h1>
     <h2 style="margin:10px 0 0 0;font-size:18px;color:#2980b9;font-weight:600;">Ολοκληρωμένο Κλινικό Πρωτόκολλο Αναγέννησης & Αποκατάστασης</h2>
     <p style="margin:8px 0 0 0;font-size:13px;color:#7f8c8d;font-style:italic;">Συνέργεια Συστηματικής Υποστήριξης & Προηγμένης Δερματικής Ανάπλασης</p>
   </div>
 
+  <!-- ΕΙΣΑΓΩΓΗ -->
   <div style="margin-bottom:30px;">
     <p style="font-size:14px;line-height:1.8;color:#444;text-align:justify;">
       Η σύγχρονη κλινική προσέγγιση απαιτεί συνέργεια. Το θεραπευτικό πρωτόκολλο της Zarkolia Health γεφυρώνει τη συστηματική, κυτταρική ενδυνάμωση εκ των έσω με την προηγμένη, στοχευμένη δερματική ανάπλαση εκ των έξω. Από την ενίσχυση της μιτοχονδριακής λειτουργίας έως την επούλωση των ιστών, τα σκευάσματα αλληλοσυμπληρώνονται για την επίτευξη του βέλτιστου κλινικού αποτελέσματος.
     </p>
   </div>
 
+  <!-- ΣΥΣΤΗΜΑΤΙΚΗ ΥΠΟΣΤΗΡΙΞΗ -->
   <h2 style="color:#1a5276;font-size:16px;border-bottom:2px solid #1a5276;padding-bottom:8px;margin-bottom:20px;text-transform:uppercase;">1. Συστηματικη Υποστηριξη & Βιοενεργειακη Προστασια</h2>
 
   <!-- Z-BOOST CAPS -->
   <div class="product-box" style="background-color:#f0f4f8;border-left:5px solid #2980b9;">
     <div class="product-image-col">
-      <img src="https://github.com/pzaro/zarkolia-images/blob/main/Z-Boost.jpg?raw=true" alt="Z-Boost Caps" class="product-img">
+      <img src="https://raw.githubusercontent.com/pzaro/zarkolia-images/main/Z-Boost.jpg" alt="Z-Boost Caps" class="product-img" crossorigin="anonymous">
     </div>
     <div class="product-content-col">
       <h3 style="margin:0 0 5px 0;color:#1a5276;font-size:18px;font-weight:bold;">Z-Boost Caps</h3>
@@ -79,12 +90,13 @@
     </div>
   </div>
 
+  <!-- ΔΕΡΜΑΤΙΚΗ ΑΝΑΠΛΑΣΗ -->
   <h2 style="color:#1a5276;font-size:16px;border-bottom:2px solid #1a5276;padding-bottom:8px;margin-bottom:20px;margin-top:40px;text-transform:uppercase;">2. Εξειδικευμενη Δερματικη Αναπλαση & Τραυματιολογια</h2>
 
   <!-- ZPLAST TOTAL REPAIR -->
   <div class="product-box" style="background-color:#fef9e7;border-left:5px solid #d4ac0d;">
     <div class="product-image-col">
-      <img src="https://github.com/pzaro/zarkolia-images/blob/main/ZplastTotalRepair.jpg?raw=true" alt="Zplast Total Repair" class="product-img">
+      <img src="https://raw.githubusercontent.com/pzaro/zarkolia-images/main/ZplastTotalRepair.jpg" alt="Zplast Total Repair" class="product-img" crossorigin="anonymous">
     </div>
     <div class="product-content-col">
       <h3 style="margin:0 0 5px 0;color:#9a7d0a;font-size:18px;font-weight:bold;">Zplast Total Repair Cream</h3>
@@ -107,7 +119,7 @@
   <!-- BRUISE OFF -->
   <div class="product-box" style="background-color:#fdf2e9;border-left:5px solid #e67e22;">
     <div class="product-image-col">
-      <img src="https://github.com/pzaro/zarkolia-images/blob/main/BruiseOff.jpg?raw=true" alt="Bruise Off" class="product-img">
+      <img src="https://raw.githubusercontent.com/pzaro/zarkolia-images/main/BruiseOff.jpg" alt="Bruise Off" class="product-img" crossorigin="anonymous">
     </div>
     <div class="product-content-col">
       <h3 style="margin:0 0 5px 0;color:#ba4a00;font-size:18px;font-weight:bold;">Bruise Off</h3>
@@ -127,7 +139,7 @@
   <!-- ZPLAST CREAM -->
   <div class="product-box" style="background-color:#eaeded;border-left:5px solid #7f8c8d;">
     <div class="product-image-col">
-      <img src="https://github.com/pzaro/zarkolia-images/blob/main/ZplastCream%20100gr.jpg?raw=true" alt="Zplast Cream" class="product-img">
+      <img src="https://raw.githubusercontent.com/pzaro/zarkolia-images/main/ZplastCream%20100gr.jpg" alt="Zplast Cream" class="product-img" crossorigin="anonymous">
     </div>
     <div class="product-content-col">
       <h3 style="margin:0 0 5px 0;color:#616a6b;font-size:18px;font-weight:bold;">Zplast</h3>
@@ -144,6 +156,7 @@
     </div>
   </div>
 
+  <!-- ΣΥΝΕΡΓΕΙΑ / ΣΥΜΠΕΡΑΣΜΑ -->
   <div style="margin-top:40px;padding:25px;background-color:#e8f8f5;border:1px solid #a3e4d7;border-radius:8px;text-align:center;">
     <h3 style="margin:0 0 15px 0;color:#117a65;font-size:16px;text-transform:uppercase;letter-spacing:1px;">Η Κλινικη Συνεργεια στην Πραξη</h3>
     <p style="margin:0;font-size:13px;line-height:1.8;color:#148f77;">
@@ -152,6 +165,7 @@
     </p>
   </div>
 
+  <!-- ΕΠΙΚΟΙΝΩΝΙΑ -->
   <div style="margin-top:40px;padding-top:20px;border-top:1px solid #dce4e0;text-align:center;">
     <h4 style="margin:0 0 5px 0;color:#1a5276;font-size:14px;font-weight:bold;">Zarkolia Health</h4>
     <p style="margin:0 0 5px 0;font-size:12px;color:#7f8c8d;">Καινοτόμα Διατροφικά Συμπληρώματα & Δερμοκαλλυντικά</p>
@@ -160,6 +174,7 @@
 
 </div>
 
+<!-- SCRIPT ΓΙΑ ΜΕΤΑΤΡΟΠΗ ΣΕ PNG -->
 <script>
   function exportToPNG() {
     const controls = document.getElementById('ui-controls');
@@ -167,26 +182,32 @@
 
     const captureElement = document.getElementById('capture-area');
     
+    // Προσωρινή αφαίρεση σκιών/περιθωρίων για καθαρή εκτύπωση
     captureElement.style.margin = '0';
     captureElement.style.boxShadow = 'none';
     captureElement.style.border = 'none';
 
     html2canvas(captureElement, {
-      scale: 2, 
-      useCORS: true, 
-      backgroundColor: '#f4f7f6' 
+      scale: 2, // Υψηλή ανάλυση 
+      useCORS: true, // Επιτρέπει τη φόρτωση των εικόνων από το GitHub
+      backgroundColor: '#f4f7f6'
     }).then(canvas => {
+      // Επαναφορά στυλ
       controls.classList.remove('hide-on-export');
       captureElement.style.margin = '0 auto';
       captureElement.style.boxShadow = '0 4px 15px rgba(0,0,0,0.05)';
       captureElement.style.border = '1px solid #dce4e0';
 
+      // Κατέβασμα εικόνας
       let link = document.createElement('a');
       link.download = 'Zarkolia_Health_Protocol.png';
       link.href = canvas.toDataURL("image/png");
       link.click();
     }).catch(err => {
-      alert("Λόγω περιορισμών ασφαλείας του browser (επειδή τρέχετε το αρχείο τοπικά), η εικόνα PNG μπορεί να μην κατέβηκε με τις φωτογραφίες. Μπορείτε να πάρετε ένα screenshot (Print Screen) της οθόνης.");
+      console.error("Σφάλμα κατά τη δημιουργία PNG:", err);
+      alert("Υπήρξε σφάλμα κατά τη δημιουργία της εικόνας. Βεβαιωθείτε ότι το αρχείο τρέχει σε server (π.χ. GitHub Pages) και όχι τοπικά.");
+      
+      // Επαναφορά στυλ σε περίπτωση σφάλματος
       controls.classList.remove('hide-on-export');
       captureElement.style.margin = '0 auto';
       captureElement.style.boxShadow = '0 4px 15px rgba(0,0,0,0.05)';
