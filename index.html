@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zarkolia Health — Πρωτόκολλο Αναγέννησης & Αποκατάστασης</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<style>
+  @page { margin: 1.5cm; }
+  body { font-family: 'Calibri', 'Helvetica', Arial, sans-serif; margin: 0; padding: 20px; background-color: #f4f7f6; color: #333; }
+  
+  .export-container { max-width: 800px; margin: 0 auto; background-color: #ffffff; padding: 40px; border: 1px solid #dce4e0; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+  .header { text-align: center; margin-bottom: 35px; padding-bottom: 25px; border-bottom: 3px solid #1a5276; }
+  
+  .product-box { display: flex; gap: 20px; align-items: stretch; margin-bottom: 25px; padding: 20px; border-radius: 0 6px 6px 0; }
+  .product-image-col { flex: 0 0 160px; display: flex; flex-direction: column; justify-content: flex-start; }
+  
+  .product-img { width: 100%; height: 160px; object-fit: contain; background-color: #ffffff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 5px; box-sizing: border-box; }
+  
+  .product-content-col { flex: 1; }
+  .indications-list { margin: 10px 0 0 0; padding-left: 20px; font-size: 12px; line-height: 1.6; color: #444; }
+  
+  .action-buttons { text-align: center; margin-bottom: 20px; }
+  .btn-download { background-color: #1a5276; color: #fff; border: none; padding: 12px 24px; font-size: 14px; font-weight: bold; border-radius: 6px; cursor: pointer; transition: background 0.3s; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+  .btn-download:hover { background-color: #2980b9; }
+
+  @media print {
+    body { background-color: #ffffff; padding: 0; }
+    .export-container { box-shadow: none; border: none; padding: 0; margin-bottom: 0; }
+    .action-buttons { display: none !important; }
+  }
+  .hide-on-export { display: none !important; }
+</style>
+</head>
+<body>
+
+<div class="action-buttons" id="ui-controls">
+  <button class="btn-download" onclick="exportToPNG()">📥 Αποθήκευση ως PNG</button>
+</div>
+
+<div id="capture-area" class="export-container">
+
+  <div class="header">
+    <h1 style="margin:0;font-size:32px;color:#1a5276;font-weight:900;letter-spacing:1px;">Zarkolia Health</h1>
+    <h2 style="margin:10px 0 0 0;font-size:18px;color:#2980b9;font-weight:600;">Ολοκληρωμένο Κλινικό Πρωτόκολλο Αναγέννησης & Αποκατάστασης</h2>
+    <p style="margin:8px 0 0 0;font-size:13px;color:#7f8c8d;font-style:italic;">Συνέργεια Συστηματικής Υποστήριξης & Προηγμένης Δερματικής Ανάπλασης</p>
+  </div>
+
+  <div style="margin-bottom:30px;">
+    <p style="font-size:14px;line-height:1.8;color:#444;text-align:justify;">
+      Η σύγχρονη κλινική προσέγγιση απαιτεί συνέργεια. Το θεραπευτικό πρωτόκολλο της Zarkolia Health γεφυρώνει τη συστηματική, κυτταρική ενδυνάμωση εκ των έσω με την προηγμένη, στοχευμένη δερματική ανάπλαση εκ των έξω. Από την ενίσχυση της μιτοχονδριακής λειτουργίας έως την επούλωση των ιστών, τα σκευάσματα αλληλοσυμπληρώνονται για την επίτευξη του βέλτιστου κλινικού αποτελέσματος.
+    </p>
+  </div>
+
+  <h2 style="color:#1a5276;font-size:16px;border-bottom:2px solid #1a5276;padding-bottom:8px;margin-bottom:20px;text-transform:uppercase;">1. Συστηματικη Υποστηριξη & Βιοενεργειακη Προστασια</h2>
+
+  <!-- Z-BOOST CAPS -->
+  <div class="product-box" style="background-color:#f0f4f8;border-left:5px solid #2980b9;">
+    <div class="product-image-col">
+      <img src="https://github.com/pzaro/zarkolia-images/blob/main/Z-Boost.jpg?raw=true" alt="Z-Boost Caps" class="product-img">
+    </div>
+    <div class="product-content-col">
+      <h3 style="margin:0 0 5px 0;color:#1a5276;font-size:18px;font-weight:bold;">Z-Boost Caps</h3>
+      <p style="margin:0 0 10px 0;font-size:11px;font-weight:bold;color:#2980b9;text-transform:uppercase;">Πολυσυστατικο Σκευασμα Αντιοξειδωτικης Υποστηριξης</p>
+      <p style="margin:0 0 10px 0;font-size:12px;line-height:1.6;color:#333;">
+        Το θεμέλιο της κυτταρικής αναγέννησης. Στοχεύει στην αντιμετώπιση του οξειδωτικού στρες και την αναστροφή της μιτοχονδριακής δυσλειτουργίας. Η συστηματική λήψη του προετοιμάζει τον οργανισμό να ανταπεξέλθει ταχύτερα σε περιόδους οργανικού στρες, λοιμώξεων ή μετεγχειρητικής αποθεραπείας.
+      </p>
+      <div style="font-size:12px;color:#555;background-color:#e1eaf1;padding:8px;border-radius:4px;margin-bottom:10px;">
+        <strong>Κύρια Δραστικά:</strong> N-Ακετυλο-L-Κυστεΐνη (NAC), Συνένζυμο Q10, α-Λιποϊκό Οξύ (R-ALA), Ψευδάργυρος, Σελήνιο, Τζίντζερ.
+      </div>
+      <strong style="font-size:12px;color:#1a5276;">Κλινικές Ενδείξεις:</strong>
+      <ul class="indications-list">
+        <li>Αντίσταση στην ινσουλίνη & Σακχαρώδης Διαβήτης τύπου 2</li>
+        <li>Σύνδρομο χρόνιας/μεταιογενούς κόπωσης (Long COVID)</li>
+        <li>Υποστήριξη καρδιαγγειακής και ενδοθηλιακής λειτουργίας</li>
+        <li>Αυτοάνοσες θυρεοειδικές διαταραχές (μείωση anti-TPO)</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 style="color:#1a5276;font-size:16px;border-bottom:2px solid #1a5276;padding-bottom:8px;margin-bottom:20px;margin-top:40px;text-transform:uppercase;">2. Εξειδικευμενη Δερματικη Αναπλαση & Τραυματιολογια</h2>
+
+  <!-- ZPLAST TOTAL REPAIR -->
+  <div class="product-box" style="background-color:#fef9e7;border-left:5px solid #d4ac0d;">
+    <div class="product-image-col">
+      <img src="https://github.com/pzaro/zarkolia-images/blob/main/ZplastTotalRepair.jpg?raw=true" alt="Zplast Total Repair" class="product-img">
+    </div>
+    <div class="product-content-col">
+      <h3 style="margin:0 0 5px 0;color:#9a7d0a;font-size:18px;font-weight:bold;">Zplast Total Repair Cream</h3>
+      <p style="margin:0 0 10px 0;font-size:11px;font-weight:bold;color:#b9770e;text-transform:uppercase;">Καινοτομος Φορμουλα Ολικης Επανορθωσης Ιστων</p>
+      <p style="margin:0 0 10px 0;font-size:12px;line-height:1.6;color:#333;">
+        Η επιτομή της δερματικής αναδόμησης. Μια πλούσια φόρμουλα που επιταχύνει τον πολλαπλασιασμό των ινοβλαστών και την ανανέωση του επιδερμιδικού φραγμού, μειώνοντας άμεσα τη φλεγμονή και τον κνησμό, ενώ διατηρεί τον ιστό βαθιά ενυδατωμένο.
+      </p>
+      <div style="font-size:12px;color:#555;background-color:#fcf3cf;padding:8px;border-radius:4px;border:1px solid #f9e79f;margin-bottom:10px;">
+        <strong>Δραστικά Συστατικά:</strong> Centella Asiatica, Μέλι, Υαλουρονικό Οξύ, Μαστίχα Χίου, Αβοκάντο, Ιπποφαές, Zea Mays, Καλαμίνη, Βιταμίνη E.
+      </div>
+      <strong style="font-size:12px;color:#9a7d0a;">Κλινικές Ενδείξεις:</strong>
+      <ul class="indications-list">
+        <li>Μετεγχειρητικές ουλές & διαδικασία επούλωσης τραυμάτων</li>
+        <li>Ερεθισμένο, ευαισθητοποιημένο ή ατοπικό δέρμα</li>
+        <li>Εγκαύματα τριβής & ήπια θερμικά εγκαύματα</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- BRUISE OFF -->
+  <div class="product-box" style="background-color:#fdf2e9;border-left:5px solid #e67e22;">
+    <div class="product-image-col">
+      <img src="https://github.com/pzaro/zarkolia-images/blob/main/BruiseOff.jpg?raw=true" alt="Bruise Off" class="product-img">
+    </div>
+    <div class="product-content-col">
+      <h3 style="margin:0 0 5px 0;color:#ba4a00;font-size:18px;font-weight:bold;">Bruise Off</h3>
+      <p style="margin:0 0 10px 0;font-size:11px;font-weight:bold;color:#d35400;text-transform:uppercase;">Στοχευμενη Αντιμετωπιση Μωλωπων & Οιδηματων</p>
+      <p style="margin:0 0 10px 0;font-size:12px;line-height:1.6;color:#333;">
+        Η εξειδικευμένη λύση για την άμεση αντιμετώπιση του αγγειακού τραύματος. Προάγει τοπικά τη μικροκυκλοφορία, διευκολύνοντας την ταχεία απορρόφηση των εκχυμώσεων και αποκαθιστώντας τη φυσιολογική όψη της επιδερμίδας στον ελάχιστο δυνατό χρόνο.
+      </p>
+      <strong style="font-size:12px;color:#ba4a00;">Κλινικές Ενδείξεις:</strong>
+      <ul class="indications-list">
+        <li>Μώλωπες & εκχυμώσεις (από χτυπήματα, πτώσεις)</li>
+        <li>Μετεπεμβατικά οιδήματα (ενέσιμες θεραπείες, πλαστική χειρουργική)</li>
+        <li>Αθλητικές κακώσεις και διαστρέμματα</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ZPLAST CREAM -->
+  <div class="product-box" style="background-color:#eaeded;border-left:5px solid #7f8c8d;">
+    <div class="product-image-col">
+      <img src="https://github.com/pzaro/zarkolia-images/blob/main/ZplastCream%20100gr.jpg?raw=true" alt="Zplast Cream" class="product-img">
+    </div>
+    <div class="product-content-col">
+      <h3 style="margin:0 0 5px 0;color:#616a6b;font-size:18px;font-weight:bold;">Zplast</h3>
+      <p style="margin:0 0 10px 0;font-size:11px;font-weight:bold;color:#707b7c;text-transform:uppercase;">Προστατευτικο Φιλμ Καθημερινης Χρησης</p>
+      <p style="margin:0 0 10px 0;font-size:12px;line-height:1.6;color:#333;">
+        Ο αξιόπιστος σύμμαχος για τις ανάγκες της καθημερινότητας. Προσφέρει άμεση επικάλυψη δημιουργώντας ένα αόρατο προστατευτικό φιλμ που αποτρέπει την επιμόλυνση, ενώ παράλληλα «κλειδώνει» την απαραίτητη υγρασία επιτρέποντας στο δέρμα να αναπνέει.
+      </p>
+      <strong style="font-size:12px;color:#616a6b;">Κλινικές Ενδείξεις:</strong>
+      <ul class="indications-list">
+        <li>Καθημερινοί μικροτραυματισμοί & επιφανειακές εκδορές</li>
+        <li>Πρόληψη βακτηριακών επιμολύνσεων σε ανοιχτές πληγές</li>
+        <li>Προστασία του δερματικού φραγμού από περιβαλλοντικούς παράγοντες</li>
+      </ul>
+    </div>
+  </div>
+
+  <div style="margin-top:40px;padding:25px;background-color:#e8f8f5;border:1px solid #a3e4d7;border-radius:8px;text-align:center;">
+    <h3 style="margin:0 0 15px 0;color:#117a65;font-size:16px;text-transform:uppercase;letter-spacing:1px;">Η Κλινικη Συνεργεια στην Πραξη</h3>
+    <p style="margin:0;font-size:13px;line-height:1.8;color:#148f77;">
+      Σε περιπτώσεις μετεγχειρητικής ανάρρωσης, αθλητικών κακώσεων ή δερματικής καταπόνησης, προτείνεται το <strong>Ολοκληρωμένο Πρωτόκολλο Zarkolia</strong>: 
+      Η καθημερινή λήψη <strong>Z-Boost Caps</strong> ρυθμίζει τη συστηματική φλεγμονή, ενώ η τοπική εφαρμογή της <strong>Zplast Total Repair</strong> ή του <strong>Bruise Off</strong> αντιμετωπίζει τη βλάβη απευθείας στον ιστό. Αυτή η διπλή προσέγγιση εγγυάται έναν ταχύτατο και ασφαλή κύκλο ίασης.
+    </p>
+  </div>
+
+  <div style="margin-top:40px;padding-top:20px;border-top:1px solid #dce4e0;text-align:center;">
+    <h4 style="margin:0 0 5px 0;color:#1a5276;font-size:14px;font-weight:bold;">Zarkolia Health</h4>
+    <p style="margin:0 0 5px 0;font-size:12px;color:#7f8c8d;">Καινοτόμα Διατροφικά Συμπληρώματα & Δερμοκαλλυντικά</p>
+    <p style="margin:0;font-size:12px;color:#2980b9;font-weight:bold;">✉️ info@zarkolia.gr</p>
+  </div>
+
+</div>
+
+<script>
+  function exportToPNG() {
+    const controls = document.getElementById('ui-controls');
+    controls.classList.add('hide-on-export');
+
+    const captureElement = document.getElementById('capture-area');
+    
+    captureElement.style.margin = '0';
+    captureElement.style.boxShadow = 'none';
+    captureElement.style.border = 'none';
+
+    html2canvas(captureElement, {
+      scale: 2, 
+      useCORS: true, 
+      backgroundColor: '#f4f7f6' 
+    }).then(canvas => {
+      controls.classList.remove('hide-on-export');
+      captureElement.style.margin = '0 auto';
+      captureElement.style.boxShadow = '0 4px 15px rgba(0,0,0,0.05)';
+      captureElement.style.border = '1px solid #dce4e0';
+
+      let link = document.createElement('a');
+      link.download = 'Zarkolia_Health_Protocol.png';
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+    }).catch(err => {
+      alert("Λόγω περιορισμών ασφαλείας του browser (επειδή τρέχετε το αρχείο τοπικά), η εικόνα PNG μπορεί να μην κατέβηκε με τις φωτογραφίες. Μπορείτε να πάρετε ένα screenshot (Print Screen) της οθόνης.");
+      controls.classList.remove('hide-on-export');
+      captureElement.style.margin = '0 auto';
+      captureElement.style.boxShadow = '0 4px 15px rgba(0,0,0,0.05)';
+      captureElement.style.border = '1px solid #dce4e0';
+    });
+  }
+</script>
+
+</body>
+</html>
