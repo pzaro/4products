@@ -58,7 +58,8 @@
 
   <div class="product-box" style="background-color:#f0f4f8;border-left:5px solid #2980b9;">
     <div class="product-image-col">
-      <img src="https://github.com/pzaro/zarkolia-images/blob/main/Z-Boost.jpg?raw=true" alt="Z-Boost Caps" class="product-img">
+      <!-- Σωστό RAW link από το GitHub -->
+      <img src="https://raw.githubusercontent.com/pzaro/zarkolia-images/main/Z-Boost.jpg" alt="Z-Boost Caps" class="product-img" crossorigin="anonymous">
     </div>
     <div class="product-content-col">
       <h3 style="margin:0 0 5px 0;color:#1a5276;font-size:18px;font-weight:bold;">Z-Boost Caps</h3>
@@ -84,7 +85,8 @@
 
   <div class="product-box" style="background-color:#f4f6f7;border-left:5px solid #5dade2;">
     <div class="product-image-col">
-      <img src="https://github.com/pzaro/zarkolia-images/blob/main/Alveolair.jpg?raw=true" alt="Alveolair Sir" class="product-img">
+      <!-- Σωστό RAW link από το GitHub -->
+      <img src="https://raw.githubusercontent.com/pzaro/zarkolia-images/main/Alveolair.jpg" alt="Alveolair Sir" class="product-img" crossorigin="anonymous">
     </div>
     <div class="product-content-col">
       <h3 style="margin:0 0 5px 0;color:#2874a6;font-size:18px;font-weight:bold;">Alveolair Sir</h3>
@@ -109,7 +111,8 @@
 
   <div class="product-box" style="background-color:#fef9e7;border-left:5px solid #d4ac0d;">
     <div class="product-image-col">
-      <img src="https://github.com/pzaro/zarkolia-images/blob/main/ZplastTotalRepair.jpg?raw=true" alt="Zplast Total Repair" class="product-img">
+      <!-- Σωστό RAW link από το GitHub -->
+      <img src="https://raw.githubusercontent.com/pzaro/zarkolia-images/main/ZplastTotalRepair.jpg" alt="Zplast Total Repair" class="product-img" crossorigin="anonymous">
     </div>
     <div class="product-content-col">
       <h3 style="margin:0 0 5px 0;color:#9a7d0a;font-size:18px;font-weight:bold;">Zplast Total Repair Cream</h3>
@@ -131,7 +134,8 @@
 
   <div class="product-box" style="background-color:#fdf2e9;border-left:5px solid #e67e22;">
     <div class="product-image-col">
-      <img src="https://github.com/pzaro/zarkolia-images/blob/main/BruiseOff.jpg?raw=true" alt="Bruise Off" class="product-img">
+      <!-- Σωστό RAW link από το GitHub -->
+      <img src="https://raw.githubusercontent.com/pzaro/zarkolia-images/main/BruiseOff.jpg" alt="Bruise Off" class="product-img" crossorigin="anonymous">
     </div>
     <div class="product-content-col">
       <h3 style="margin:0 0 5px 0;color:#ba4a00;font-size:18px;font-weight:bold;">Bruise Off Gel</h3>
@@ -150,7 +154,8 @@
 
   <div class="product-box" style="background-color:#eaeded;border-left:5px solid #7f8c8d;">
     <div class="product-image-col">
-      <img src="https://github.com/pzaro/zarkolia-images/blob/main/ZplastCream%20100gr.jpg?raw=true" alt="Zplast Cream" class="product-img">
+      <!-- Σωστό RAW link από το GitHub. Προσοχή στο %20 για το κενό -->
+      <img src="https://raw.githubusercontent.com/pzaro/zarkolia-images/main/ZplastCream%20100gr.jpg" alt="Zplast Cream" class="product-img" crossorigin="anonymous">
     </div>
     <div class="product-content-col">
       <h3 style="margin:0 0 5px 0;color:#616a6b;font-size:18px;font-weight:bold;">Zplast Cream</h3>
@@ -194,13 +199,9 @@
     captureElement.style.boxShadow = 'none';
     captureElement.style.border = 'none';
 
-    // Χωρίς την ετικέτα crossorigin στις εικόνες, αν τρέχετε το αρχείο τοπικά, 
-    // το canvas μπορεί να μπλοκάρει τη δημιουργία εικόνας. 
-    // Έχει προστεθεί το allowTaint: true για να βοηθήσει.
     html2canvas(captureElement, {
       scale: 2, 
       useCORS: true, 
-      allowTaint: true,
       backgroundColor: '#f4f7f6'
     }).then(canvas => {
       controls.classList.remove('hide-on-export');
@@ -214,7 +215,7 @@
       link.click();
     }).catch(err => {
       console.error("Σφάλμα:", err);
-      alert("Οι εικόνες τώρα εμφανίζονται! Εάν το κουμπί δεν κατεβάζει το αρχείο λόγω τοπικών περιορισμών του υπολογιστή σας, παρακαλώ πατήστε Print Screen στο πληκτρολόγιό σας για να αποθηκεύσετε την εικόνα.");
+      alert("Λόγω αυστηρών ρυθμίσεων του browser, η εικόνα ίσως δεν μπορεί να αποθηκευτεί αυτόματα. Παρακαλώ χρησιμοποιήστε το Print Screen.");
       
       controls.classList.remove('hide-on-export');
       captureElement.style.margin = '0 auto';
