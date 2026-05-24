@@ -10,26 +10,21 @@
   @page { margin: 1.5cm; }
   body { font-family: 'Calibri', 'Helvetica', Arial, sans-serif; margin: 0; padding: 20px; background-color: #f4f7f6; color: #333; }
   
-  /* Container Layout */
   .export-container { max-width: 800px; margin: 0 auto; background-color: #ffffff; padding: 40px; border: 1px solid #dce4e0; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
   .header { text-align: center; margin-bottom: 35px; padding-bottom: 25px; border-bottom: 3px solid #1a5276; }
   
-  /* Flexbox για τα προϊόντα */
   .product-box { display: flex; gap: 20px; align-items: stretch; margin-bottom: 25px; padding: 20px; border-radius: 0 6px 6px 0; }
   .product-image-col { flex: 0 0 160px; display: flex; flex-direction: column; justify-content: flex-start; }
   
-  /* Στυλ εικόνων */
   .product-img { width: 100%; height: 160px; object-fit: contain; background-color: #ffffff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 5px; box-sizing: border-box; }
   
   .product-content-col { flex: 1; }
   .indications-list { margin: 10px 0 0 0; padding-left: 20px; font-size: 12px; line-height: 1.6; color: #444; }
   
-  /* Κουμπί Download */
   .action-buttons { text-align: center; margin-bottom: 20px; }
   .btn-download { background-color: #1a5276; color: #fff; border: none; padding: 12px 24px; font-size: 14px; font-weight: bold; border-radius: 6px; cursor: pointer; transition: background 0.3s; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
   .btn-download:hover { background-color: #2980b9; }
 
-  /* CSS για εκτύπωση / αποθήκευση εικόνας */
   @media print {
     body { background-color: #ffffff; padding: 0; }
     .export-container { box-shadow: none; border: none; padding: 0; margin-bottom: 0; }
@@ -83,7 +78,31 @@
     </div>
   </div>
 
-  <h2 style="color:#1a5276;font-size:16px;border-bottom:2px solid #1a5276;padding-bottom:8px;margin-bottom:20px;margin-top:40px;text-transform:uppercase;">2. Εξειδικευμενη Δερματικη Αναπλαση & Τραυματιολογια</h2>
+  <h2 style="color:#1a5276;font-size:16px;border-bottom:2px solid #1a5276;padding-bottom:8px;margin-bottom:20px;margin-top:40px;text-transform:uppercase;">2. Αναπνευστικη Υποστηριξη & Αποκατασταση</h2>
+
+  <div class="product-box" style="background-color:#f4f6f7;border-left:5px solid #5dade2;">
+    <div class="product-image-col">
+      <img src="https://github.com/pzaro/zarkolia-images/blob/main/Alveolair.jpg?raw=true" alt="Alveolair Sir" class="product-img" crossorigin="anonymous">
+    </div>
+    <div class="product-content-col">
+      <h3 style="margin:0 0 5px 0;color:#2874a6;font-size:18px;font-weight:bold;">Alveolair Sir</h3>
+      <p style="margin:0 0 10px 0;font-size:11px;font-weight:bold;color:#3498db;text-transform:uppercase;">Σιροπι Αναπνευστικης Υποστηριξης</p>
+      <p style="margin:0 0 10px 0;font-size:12px;line-height:1.6;color:#333;">
+        Εξειδικευμένη σύνθεση για την ανακούφιση του ανώτερου αναπνευστικού και τη φυσιολογική λειτουργία των βλεννογόνων. Συμβάλλει στην καταπράυνση του ερεθισμένου λαιμού, συνδυάζοντας προστατευτικές και ήπιες καταπραϋντικές ιδιότητες.
+      </p>
+      <div style="font-size:12px;color:#555;background-color:#eaf2f8;padding:8px;border-radius:4px;border:1px solid #d4e6f1;margin-bottom:10px;">
+        <strong>Βασικά Συστατικά:</strong> Ευκάλυπτος, Ιπποφαές.
+      </div>
+      <strong style="font-size:12px;color:#2874a6;">Κλινικές Ενδείξεις:</strong>
+      <ul class="indications-list">
+        <li>Ερεθισμένος λαιμός και φάρυγγας</li>
+        <li>Συμπτωματική ανακούφιση του βήχα</li>
+        <li>Υποστήριξη της τοπικής άμυνας κατά τη διάρκεια εποχιακών λοιμώξεων</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 style="color:#1a5276;font-size:16px;border-bottom:2px solid #1a5276;padding-bottom:8px;margin-bottom:20px;margin-top:40px;text-transform:uppercase;">3. Εξειδικευμενη Δερματικη Αναπλαση & Τραυματιολογια</h2>
 
   <div class="product-box" style="background-color:#fef9e7;border-left:5px solid #d4ac0d;">
     <div class="product-image-col">
@@ -112,7 +131,7 @@
       <img src="https://github.com/pzaro/zarkolia-images/blob/main/BruiseOff.jpg?raw=true" alt="Bruise Off" class="product-img" crossorigin="anonymous">
     </div>
     <div class="product-content-col">
-      <h3 style="margin:0 0 5px 0;color:#ba4a00;font-size:18px;font-weight:bold;">Bruise Off</h3>
+      <h3 style="margin:0 0 5px 0;color:#ba4a00;font-size:18px;font-weight:bold;">Bruise Off Gel</h3>
       <p style="margin:0 0 10px 0;font-size:11px;font-weight:bold;color:#d35400;text-transform:uppercase;">Στοχευμενη Αντιμετωπιση Μωλωπων & Οιδηματων</p>
       <p style="margin:0 0 10px 0;font-size:12px;line-height:1.6;color:#333;">
         Η εξειδικευμένη λύση για την άμεση αντιμετώπιση του αγγειακού τραύματος. Προάγει τοπικά τη μικροκυκλοφορία, διευκολύνοντας την ταχεία απορρόφηση των εκχυμώσεων και αποκαθιστώντας τη φυσιολογική όψη της επιδερμίδας στον ελάχιστο δυνατό χρόνο.
@@ -131,7 +150,7 @@
       <img src="https://github.com/pzaro/zarkolia-images/blob/main/ZplastCream%20100gr.jpg?raw=true" alt="Zplast Cream" class="product-img" crossorigin="anonymous">
     </div>
     <div class="product-content-col">
-      <h3 style="margin:0 0 5px 0;color:#616a6b;font-size:18px;font-weight:bold;">Zplast</h3>
+      <h3 style="margin:0 0 5px 0;color:#616a6b;font-size:18px;font-weight:bold;">Zplast Cream</h3>
       <p style="margin:0 0 10px 0;font-size:11px;font-weight:bold;color:#707b7c;text-transform:uppercase;">Προστατευτικο Φιλμ Καθημερινης Χρησης</p>
       <p style="margin:0 0 10px 0;font-size:12px;line-height:1.6;color:#333;">
         Ο αξιόπιστος σύμμαχος για τις ανάγκες της καθημερινότητας. Προσφέρει άμεση επικάλυψη δημιουργώντας ένα αόρατο προστατευτικό φιλμ που αποτρέπει την επιμόλυνση, ενώ παράλληλα «κλειδώνει» την απαραίτητη υγρασία επιτρέποντας στο δέρμα να αναπνέει.
@@ -148,8 +167,8 @@
   <div style="margin-top:40px;padding:25px;background-color:#e8f8f5;border:1px solid #a3e4d7;border-radius:8px;text-align:center;">
     <h3 style="margin:0 0 15px 0;color:#117a65;font-size:16px;text-transform:uppercase;letter-spacing:1px;">Η Κλινικη Συνεργεια στην Πραξη</h3>
     <p style="margin:0;font-size:13px;line-height:1.8;color:#148f77;">
-      Σε περιπτώσεις μετεγχειρητικής ανάρρωσης, αθλητικών κακώσεων ή δερματικής καταπόνησης, προτείνεται το <strong>Ολοκληρωμένο Πρωτόκολλο Zarkolia</strong>: 
-      Η καθημερινή λήψη <strong>Z-Boost Caps</strong> ρυθμίζει τη συστηματική φλεγμονή, ενώ η τοπική εφαρμογή της <strong>Zplast Total Repair</strong> ή του <strong>Bruise Off</strong> αντιμετωπίζει τη βλάβη απευθείας στον ιστό. Αυτή η διπλή προσέγγιση εγγυάται έναν ταχύτατο και ασφαλή κύκλο ίασης.
+      Σε περιπτώσεις μετεγχειρητικής ανάρρωσης, εποχιακών λοιμώξεων ή τραυματισμών, προτείνεται το <strong>Ολοκληρωμένο Πρωτόκολλο Zarkolia</strong>: 
+      Η λήψη <strong>Z-Boost Caps</strong> και <strong>Alveolair Sir</strong> ρυθμίζει τη συστηματική φλεγμονή και ενισχύει την άμυνα εκ των έσω, ενώ η τοπική εφαρμογή της <strong>Zplast Total Repair</strong> ή του <strong>Bruise Off Gel</strong> αντιμετωπίζει τη βλάβη απευθείας στον ιστό. Αυτή η διπλή προσέγγιση εγγυάται έναν ταχύτατο και ασφαλή κύκλο ίασης.
     </p>
   </div>
 
@@ -168,23 +187,20 @@
 
     const captureElement = document.getElementById('capture-area');
     
-    // Προσωρινή αφαίρεση σκιών/περιθωρίων για καθαρή εκτύπωση
     captureElement.style.margin = '0';
     captureElement.style.boxShadow = 'none';
     captureElement.style.border = 'none';
 
     html2canvas(captureElement, {
-      scale: 2, // Υψηλή ανάλυση 
-      useCORS: true, // Επιτρέπει τη φόρτωση των εικόνων από το GitHub
+      scale: 2, 
+      useCORS: true, 
       backgroundColor: '#f4f7f6'
     }).then(canvas => {
-      // Επαναφορά στυλ
       controls.classList.remove('hide-on-export');
       captureElement.style.margin = '0 auto';
       captureElement.style.boxShadow = '0 4px 15px rgba(0,0,0,0.05)';
       captureElement.style.border = '1px solid #dce4e0';
 
-      // Κατέβασμα εικόνας
       let link = document.createElement('a');
       link.download = 'Zarkolia_Health_Protocol.png';
       link.href = canvas.toDataURL("image/png");
@@ -193,7 +209,6 @@
       console.error("Σφάλμα κατά τη δημιουργία PNG:", err);
       alert("Υπήρξε σφάλμα κατά τη δημιουργία της εικόνας. Αν εκτελείτε το αρχείο τοπικά, παρακαλώ αποθηκεύστε την εικόνα βγάζοντας Print Screen της οθόνης.");
       
-      // Επαναφορά στυλ σε περίπτωση σφάλματος
       controls.classList.remove('hide-on-export');
       captureElement.style.margin = '0 auto';
       captureElement.style.boxShadow = '0 4px 15px rgba(0,0,0,0.05)';
