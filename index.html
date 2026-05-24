@@ -3,226 +3,518 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zarkolia Health — Πρωτόκολλο Αναγέννησης & Αποκατάστασης</title>
+<title>Zarkolia Health — Διαδραστικό Κλινικό Πρωτόκολλο</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 <style>
-  @page { margin: 1.5cm; }
-  body { font-family: 'Calibri', 'Helvetica', Arial, sans-serif; margin: 0; padding: 20px; background-color: #f4f7f6; color: #333; }
+  * { box-sizing: border-box; }
+  body { font-family: 'Calibri','Helvetica',Arial,sans-serif; margin:0; padding:20px; background:linear-gradient(135deg,#e8f1f8 0%,#f4f7f6 100%); color:#333; min-height:100vh; }
   
-  .export-container { max-width: 800px; margin: 0 auto; background-color: #ffffff; padding: 40px; border: 1px solid #dce4e0; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-  .header { text-align: center; margin-bottom: 35px; padding-bottom: 25px; border-bottom: 3px solid #1a5276; }
+  .container { max-width:1050px; margin:0 auto; }
   
-  .product-box { display: flex; gap: 20px; align-items: stretch; margin-bottom: 25px; padding: 20px; border-radius: 0 6px 6px 0; }
-  .product-image-col { flex: 0 0 160px; display: flex; flex-direction: column; justify-content: flex-start; }
+  /* HEADER */
+  .main-header { text-align:center; margin-bottom:25px; padding:30px 20px; background:linear-gradient(135deg,#1a5276 0%,#2980b9 100%); border-radius:12px; color:#fff; box-shadow:0 6px 20px rgba(0,0,0,0.15); }
+  .main-header h1 { margin:0; font-size:38px; font-weight:900; letter-spacing:1px; }
+  .main-header h2 { margin:10px 0 0 0; font-size:20px; font-weight:400; opacity:0.95; }
   
-  .product-img { width: 100%; height: 160px; object-fit: contain; background-color: #ffffff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 5px; box-sizing: border-box; }
+  /* NAVIGATION */
+  .nav-controls { display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; gap:10px; flex-wrap:wrap; }
+  .nav-btn { background:#1a5276; color:#fff; border:none; padding:16px 26px; font-size:16px; font-weight:bold; border-radius:8px; cursor:pointer; box-shadow:0 3px 8px rgba(0,0,0,0.15); transition:all 0.3s; display:flex; align-items:center; gap:8px; }
+  .nav-btn:hover { background:#2980b9; transform:translateY(-2px); }
+  .nav-btn:disabled { background:#bdc3c7; cursor:not-allowed; transform:none; }
+  .nav-btn.export { background:#27ae60; }
+  .nav-btn.export:hover { background:#229954; }
   
-  .product-content-col { flex: 1; }
-  .indications-list { margin: 10px 0 0 0; padding-left: 20px; font-size: 12px; line-height: 1.6; color: #444; }
+  /* PRODUCT INDICATOR */
+  .product-indicator { display:flex; gap:8px; align-items:center; }
+  .dot { width:12px; height:12px; border-radius:50%; background:#bdc3c7; cursor:pointer; transition:all 0.3s; }
+  .dot.active { background:#1a5276; transform:scale(1.3); }
+  .counter { font-size:17px; color:#1a5276; font-weight:bold; padding:0 10px; }
   
-  .action-buttons { text-align: center; margin-bottom: 20px; }
-  .btn-download { background-color: #1a5276; color: #fff; border: none; padding: 12px 24px; font-size: 14px; font-weight: bold; border-radius: 6px; cursor: pointer; transition: background 0.3s; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-  .btn-download:hover { background-color: #2980b9; }
-
+  /* CARD */
+  .card { background:#fff; border-radius:12px; padding:40px; box-shadow:0 6px 20px rgba(0,0,0,0.08); border:1px solid #e0e6ea; animation:fadeIn 0.4s ease-in; }
+  @keyframes fadeIn { from { opacity:0; transform:translateX(20px); } to { opacity:1; transform:translateX(0); } }
+  
+  /* PRODUCT HEADER */
+  .product-header { display:flex; gap:25px; align-items:flex-start; margin-bottom:25px; padding-bottom:20px; border-bottom:2px solid var(--accent-color,#1a5276); }
+  .product-img-wrapper { flex:0 0 220px; }
+  .product-img { width:100%; height:220px; object-fit:contain; background:#fff; border:1px solid #e0e0e0; border-radius:10px; padding:8px; box-shadow:0 2px 8px rgba(0,0,0,0.05); }
+  .product-title-area { flex:1; }
+  .product-title-area h2 { margin:0 0 6px 0; font-size:32px; font-weight:900; color:var(--accent-color,#1a5276); }
+  .product-subtitle { margin:0 0 14px 0; font-size:14px; font-weight:bold; color:#666; text-transform:uppercase; letter-spacing:1px; }
+  .product-desc { margin:0; font-size:16px; line-height:1.7; color:#444; }
+  
+  /* SECTIONS */
+  .section { margin-bottom:20px; }
+  .section-title { font-size:16px; font-weight:bold; color:#1a5276; text-transform:uppercase; letter-spacing:1px; margin-bottom:10px; padding:6px 12px; background:linear-gradient(90deg,#e8f1f8 0%,transparent 100%); border-left:4px solid var(--accent-color,#1a5276); border-radius:0 4px 4px 0; }
+  
+  /* DOSAGE BOX */
+  .dosage-box { background:#fef9e7; border:1px solid #f9e79f; border-radius:6px; padding:16px 20px; font-size:16px; line-height:1.6; color:#7d6608; }
+  .dosage-box strong { color:#9a7d0a; }
+  
+  /* INDICATIONS */
+  .indications-grid { display:grid; gap:10px; }
+  .indication-item { background:#f0f7f0; border-left:4px solid #27ae60; padding:14px 18px; border-radius:0 4px 4px 0; font-size:15px; line-height:1.6; color:#333; }
+  .indication-item strong { color:#1a7a42; display:block; margin-bottom:3px; }
+  
+  /* INGREDIENTS TABLE */
+  .ingredients-table { width:100%; border-collapse:collapse; font-size:14px; }
+  .ingredients-table th { background:#1a5276; color:#fff; padding:12px 10px; text-align:left; font-weight:bold; text-transform:uppercase; letter-spacing:0.5px; font-size:13px; }
+  .ingredients-table td { padding:14px 12px; border-bottom:1px solid #e0e0e0; vertical-align:top; line-height:1.5; }
+  .ingredients-table tr:last-child td { border-bottom:none; }
+  .ingredients-table tr:nth-child(even) { background:#f9f9f9; }
+  .pubmed-link { color:#1a5276; font-weight:bold; text-decoration:none; font-size:13px; }
+  .pubmed-link:hover { text-decoration:underline; }
+  .mechanism { color:#555; font-style:italic; font-size:13px; line-height:1.6; }
+  
+  /* DISCLAIMER */
+  .disclaimer { margin-top:24px; padding:14px 18px; background:#fafbfc; border-left:3px solid #95a5a6; font-size:13px; color:#7f8c8d; line-height:1.5; border-radius:0 4px 4px 0; }
+  
   @media print {
-    body { background-color: #ffffff; padding: 0; }
-    .export-container { box-shadow: none; border: none; padding: 0; margin-bottom: 0; }
-    .action-buttons { display: none !important; }
+    body { background:#fff; padding:0; }
+    .nav-controls, .product-indicator { display:none !important; }
+    .card { box-shadow:none; border:none; }
   }
-  .hide-on-export { display: none !important; }
+  
+  @media (max-width:600px) {
+    .product-header { flex-direction:column; align-items:center; text-align:center; }
+    .product-img-wrapper { flex:initial; width:200px; }
+  }
 </style>
 </head>
 <body>
 
-<div class="action-buttons" id="ui-controls">
-  <button class="btn-download" onclick="exportToPNG()">📥 Αποθήκευση ως PNG</button>
-</div>
+<div class="container">
 
-<div id="capture-area" class="export-container">
-
-  <div class="header">
-    <h1 style="margin:0;font-size:32px;color:#1a5276;font-weight:900;letter-spacing:1px;">Zarkolia Health</h1>
-    <h2 style="margin:10px 0 0 0;font-size:18px;color:#2980b9;font-weight:600;">Ολοκληρωμένο Κλινικό Πρωτόκολλο Αναγέννησης & Αποκατάστασης</h2>
-    <p style="margin:8px 0 0 0;font-size:13px;color:#7f8c8d;font-style:italic;">Συνέργεια Συστηματικής Υποστήριξης & Προηγμένης Δερματικής Ανάπλασης</p>
+  <!-- HEADER -->
+  <div class="main-header">
+    <h1>Zarkolia Health</h1>
+    <h2>Διαδραστικό Κλινικό Πρωτόκολλο · 5 Προϊόντα</h2>
   </div>
 
-  <div style="margin-bottom:30px;">
-    <p style="font-size:14px;line-height:1.8;color:#444;text-align:justify;">
-      Η σύγχρονη κλινική προσέγγιση απαιτεί συνέργεια. Το θεραπευτικό πρωτόκολλο της Zarkolia Health γεφυρώνει τη συστηματική, κυτταρική ενδυνάμωση εκ των έσω με την προηγμένη, στοχευμένη δερματική ανάπλαση εκ των έξω. Από την ενίσχυση της μιτοχονδριακής λειτουργίας έως την επούλωση των ιστών, τα σκευάσματα αλληλοσυμπληρώνονται για την επίτευξη του βέλτιστου κλινικού αποτελέσματος.
-    </p>
+  <!-- NAVIGATION -->
+  <div class="nav-controls">
+    <button class="nav-btn" id="prevBtn" onclick="prevProduct()">◀ Προηγούμενο</button>
+    
+    <div class="product-indicator">
+      <span class="counter" id="counter">1 / 5</span>
+      <div id="dots"></div>
+    </div>
+    
+    <button class="nav-btn" id="nextBtn" onclick="nextProduct()">Επόμενο ▶</button>
   </div>
 
-  <!-- ΕΝΟΤΗΤΑ 1 -->
-  <h2 style="color:#1a5276;font-size:16px;border-bottom:2px solid #1a5276;padding-bottom:8px;margin-bottom:20px;text-transform:uppercase;">1. Συστηματικη Υποστηριξη & Βιοενεργειακη Προστασια</h2>
-
-  <div class="product-box" style="background-color:#f0f4f8;border-left:5px solid #2980b9;">
-    <div class="product-image-col">
-      <!-- Σωστό RAW link από το GitHub -->
-      <img src="https://raw.githubusercontent.com/pzaro/zarkolia-images/main/Z-Boost.jpg" alt="Z-Boost Caps" class="product-img" crossorigin="anonymous">
-    </div>
-    <div class="product-content-col">
-      <h3 style="margin:0 0 5px 0;color:#1a5276;font-size:18px;font-weight:bold;">Z-Boost Caps</h3>
-      <p style="margin:0 0 10px 0;font-size:11px;font-weight:bold;color:#2980b9;text-transform:uppercase;">Πολυσυστατικο Σκευασμα Αντιοξειδωτικης Υποστηριξης</p>
-      <p style="margin:0 0 10px 0;font-size:12px;line-height:1.6;color:#333;">
-        Το θεμέλιο της κυτταρικής αναγέννησης. Στοχεύει στην αντιμετώπιση του οξειδωτικού στρες και την αναστροφή της μιτοχονδριακής δυσλειτουργίας. Η συστηματική λήψη του προετοιμάζει τον οργανισμό να ανταπεξέλθει ταχύτερα σε περιόδους οργανικού στρες, λοιμώξεων ή μετεγχειρητικής αποθεραπείας.
-      </p>
-      <div style="font-size:12px;color:#555;background-color:#e1eaf1;padding:8px;border-radius:4px;margin-bottom:10px;">
-        <strong>Κύρια Δραστικά:</strong> N-Ακετυλο-L-Κυστεΐνη (NAC), Συνένζυμο Q10, α-Λιποϊκό Οξύ (R-ALA), Ψευδάργυρος, Σελήνιο, Τζίντζερ.
-      </div>
-      <strong style="font-size:12px;color:#1a5276;">Κλινικές Ενδείξεις:</strong>
-      <ul class="indications-list">
-        <li>Αντίσταση στην ινσουλίνη & Σακχαρώδης Διαβήτης τύπου 2</li>
-        <li>Σύνδρομο χρόνιας/μεταιογενούς κόπωσης (Long COVID)</li>
-        <li>Υποστήριξη καρδιαγγειακής και ενδοθηλιακής λειτουργίας</li>
-        <li>Αυτοάνοσες θυρεοειδικές διαταραχές (μείωση anti-TPO)</li>
-      </ul>
-    </div>
+  <div class="nav-controls">
+    <button class="nav-btn export" onclick="exportCurrentCard()">📥 Εξαγωγή PNG (τρέχουσα κάρτα)</button>
+    <button class="nav-btn export" onclick="exportAllCards()">📦 Εξαγωγή Όλων ως PNG</button>
   </div>
 
-  <!-- ΕΝΟΤΗΤΑ 2 -->
-  <h2 style="color:#1a5276;font-size:16px;border-bottom:2px solid #1a5276;padding-bottom:8px;margin-bottom:20px;margin-top:40px;text-transform:uppercase;">2. Αναπνευστικη Υποστηριξη & Αποκατασταση</h2>
-
-  <div class="product-box" style="background-color:#f4f6f7;border-left:5px solid #5dade2;">
-    <div class="product-image-col">
-      <!-- Σωστό RAW link από το GitHub -->
-      <img src="https://raw.githubusercontent.com/pzaro/zarkolia-images/main/Alveolair.jpg" alt="Alveolair Sir" class="product-img" crossorigin="anonymous">
-    </div>
-    <div class="product-content-col">
-      <h3 style="margin:0 0 5px 0;color:#2874a6;font-size:18px;font-weight:bold;">Alveolair Sir</h3>
-      <p style="margin:0 0 10px 0;font-size:11px;font-weight:bold;color:#3498db;text-transform:uppercase;">Σιροπι Αναπνευστικης Υποστηριξης</p>
-      <p style="margin:0 0 10px 0;font-size:12px;line-height:1.6;color:#333;">
-        Εξειδικευμένη σύνθεση για την ανακούφιση του ανώτερου αναπνευστικού και τη φυσιολογική λειτουργία των βλεννογόνων. Συμβάλλει στην καταπράυνση του ερεθισμένου λαιμού, συνδυάζοντας προστατευτικές και ήπιες καταπραϋντικές ιδιότητες.
-      </p>
-      <div style="font-size:12px;color:#555;background-color:#eaf2f8;padding:8px;border-radius:4px;border:1px solid #d4e6f1;margin-bottom:10px;">
-        <strong>Βασικά Συστατικά:</strong> Ευκάλυπτος, Ιπποφαές.
-      </div>
-      <strong style="font-size:12px;color:#2874a6;">Κλινικές Ενδείξεις:</strong>
-      <ul class="indications-list">
-        <li>Ερεθισμένος λαιμός και φάρυγγας</li>
-        <li>Συμπτωματική ανακούφιση του βήχα</li>
-        <li>Υποστήριξη της τοπικής άμυνας κατά τη διάρκεια εποχιακών λοιμώξεων</li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- ΕΝΟΤΗΤΑ 3 -->
-  <h2 style="color:#1a5276;font-size:16px;border-bottom:2px solid #1a5276;padding-bottom:8px;margin-bottom:20px;margin-top:40px;text-transform:uppercase;">3. Εξειδικευμενη Δερματικη Αναπλαση & Τραυματιολογια</h2>
-
-  <div class="product-box" style="background-color:#fef9e7;border-left:5px solid #d4ac0d;">
-    <div class="product-image-col">
-      <!-- Σωστό RAW link από το GitHub -->
-      <img src="https://raw.githubusercontent.com/pzaro/zarkolia-images/main/ZplastTotalRepair.jpg" alt="Zplast Total Repair" class="product-img" crossorigin="anonymous">
-    </div>
-    <div class="product-content-col">
-      <h3 style="margin:0 0 5px 0;color:#9a7d0a;font-size:18px;font-weight:bold;">Zplast Total Repair Cream</h3>
-      <p style="margin:0 0 10px 0;font-size:11px;font-weight:bold;color:#b9770e;text-transform:uppercase;">Καινοτομος Φορμουλα Ολικης Επανορθωσης Ιστων</p>
-      <p style="margin:0 0 10px 0;font-size:12px;line-height:1.6;color:#333;">
-        Η επιτομή της δερματικής αναδόμησης. Μια πλούσια φόρμουλα που επιταχύνει τον πολλαπλασιασμό των ινοβλαστών και την ανανέωση του επιδερμιδικού φραγμού, μειώνοντας άμεσα τη φλεγμονή και τον κνησμό, ενώ διατηρεί τον ιστό βαθιά ενυδατωμένο.
-      </p>
-      <div style="font-size:12px;color:#555;background-color:#fcf3cf;padding:8px;border-radius:4px;border:1px solid #f9e79f;margin-bottom:10px;">
-        <strong>Δραστικά Συστατικά:</strong> Centella Asiatica, Μέλι, Υαλουρονικό Οξύ, Μαστίχα Χίου, Αβοκάντο, Ιπποφαές, Zea Mays, Καλαμίνη, Βιταμίνη E.
-      </div>
-      <strong style="font-size:12px;color:#9a7d0a;">Κλινικές Ενδείξεις:</strong>
-      <ul class="indications-list">
-        <li>Μετεγχειρητικές ουλές & διαδικασία επούλωσης τραυμάτων</li>
-        <li>Ερεθισμένο, ευαισθητοποιημένο ή ατοπικό δέρμα</li>
-        <li>Εγκαύματα τριβής & ήπια θερμικά εγκαύματα</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="product-box" style="background-color:#fdf2e9;border-left:5px solid #e67e22;">
-    <div class="product-image-col">
-      <!-- Σωστό RAW link από το GitHub -->
-      <img src="https://raw.githubusercontent.com/pzaro/zarkolia-images/main/BruiseOff.jpg" alt="Bruise Off" class="product-img" crossorigin="anonymous">
-    </div>
-    <div class="product-content-col">
-      <h3 style="margin:0 0 5px 0;color:#ba4a00;font-size:18px;font-weight:bold;">Bruise Off Gel</h3>
-      <p style="margin:0 0 10px 0;font-size:11px;font-weight:bold;color:#d35400;text-transform:uppercase;">Στοχευμενη Αντιμετωπιση Μωλωπων & Οιδηματων</p>
-      <p style="margin:0 0 10px 0;font-size:12px;line-height:1.6;color:#333;">
-        Η εξειδικευμένη λύση για την άμεση αντιμετώπιση του αγγειακού τραύματος. Προάγει τοπικά τη μικροκυκλοφορία, διευκολύνοντας την ταχεία απορρόφηση των εκχυμώσεων και αποκαθιστώντας τη φυσιολογική όψη της επιδερμίδας στον ελάχιστο δυνατό χρόνο.
-      </p>
-      <strong style="font-size:12px;color:#ba4a00;">Κλινικές Ενδείξεις:</strong>
-      <ul class="indications-list">
-        <li>Μώλωπες & εκχυμώσεις (από χτυπήματα, πτώσεις)</li>
-        <li>Μετεπεμβατικά οιδήματα (ενέσιμες θεραπείες, πλαστική χειρουργική)</li>
-        <li>Αθλητικές κακώσεις και διαστρέμματα</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="product-box" style="background-color:#eaeded;border-left:5px solid #7f8c8d;">
-    <div class="product-image-col">
-      <!-- Σωστό RAW link από το GitHub. Προσοχή στο %20 για το κενό -->
-      <img src="https://raw.githubusercontent.com/pzaro/zarkolia-images/main/ZplastCream%20100gr.jpg" alt="Zplast Cream" class="product-img" crossorigin="anonymous">
-    </div>
-    <div class="product-content-col">
-      <h3 style="margin:0 0 5px 0;color:#616a6b;font-size:18px;font-weight:bold;">Zplast Cream</h3>
-      <p style="margin:0 0 10px 0;font-size:11px;font-weight:bold;color:#707b7c;text-transform:uppercase;">Προστατευτικο Φιλμ Καθημερινης Χρησης</p>
-      <p style="margin:0 0 10px 0;font-size:12px;line-height:1.6;color:#333;">
-        Ο αξιόπιστος σύμμαχος για τις ανάγκες της καθημερινότητας. Προσφέρει άμεση επικάλυψη δημιουργώντας ένα αόρατο προστατευτικό φιλμ που αποτρέπει την επιμόλυνση, ενώ παράλληλα «κλειδώνει» την απαραίτητη υγρασία επιτρέποντας στο δέρμα να αναπνέει.
-      </p>
-      <strong style="font-size:12px;color:#616a6b;">Κλινικές Ενδείξεις:</strong>
-      <ul class="indications-list">
-        <li>Καθημερινοί μικροτραυματισμοί & επιφανειακές εκδορές</li>
-        <li>Πρόληψη βακτηριακών επιμολύνσεων σε ανοιχτές πληγές</li>
-        <li>Προστασία του δερματικού φραγμού από περιβαλλοντικούς παράγοντες</li>
-      </ul>
-    </div>
-  </div>
-
-  <div style="margin-top:40px;padding:25px;background-color:#e8f8f5;border:1px solid #a3e4d7;border-radius:8px;text-align:center;">
-    <h3 style="margin:0 0 15px 0;color:#117a65;font-size:16px;text-transform:uppercase;letter-spacing:1px;">Η Κλινικη Συνεργεια στην Πραξη</h3>
-    <p style="margin:0;font-size:13px;line-height:1.8;color:#148f77;">
-      Σε περιπτώσεις μετεγχειρητικής ανάρρωσης, εποχιακών λοιμώξεων ή τραυματισμών, προτείνεται το <strong>Ολοκληρωμένο Πρωτόκολλο Zarkolia</strong>: 
-      Η λήψη <strong>Z-Boost Caps</strong> και <strong>Alveolair Sir</strong> ρυθμίζει τη συστηματική φλεγμονή και ενισχύει την άμυνα εκ των έσω, ενώ η τοπική εφαρμογή της <strong>Zplast Total Repair</strong> ή του <strong>Bruise Off Gel</strong> αντιμετωπίζει τη βλάβη απευθείας στον ιστό. Αυτή η διπλή προσέγγιση εγγυάται έναν ταχύτατο και ασφαλή κύκλο ίασης.
-    </p>
-  </div>
-
-  <div style="margin-top:40px;padding-top:20px;border-top:1px solid #dce4e0;text-align:center;">
-    <h4 style="margin:0 0 5px 0;color:#1a5276;font-size:14px;font-weight:bold;">Zarkolia Health</h4>
-    <p style="margin:0 0 5px 0;font-size:12px;color:#7f8c8d;">Καινοτόμα Διατροφικά Συμπληρώματα & Δερμοκαλλυντικά</p>
-    <p style="margin:0;font-size:12px;color:#2980b9;font-weight:bold;">✉️ info@zarkolia.gr</p>
-  </div>
+  <!-- CARD CONTAINER -->
+  <div id="cardContainer"></div>
 
 </div>
 
 <script>
-  function exportToPNG() {
-    const controls = document.getElementById('ui-controls');
-    controls.classList.add('hide-on-export');
+// ═══════════════════════════════════════════════════════════
+// PRODUCT DATABASE — Με αναλυτικές πληροφορίες ανά προϊόν
+// ═══════════════════════════════════════════════════════════
+const products = [
+  // ─────────────── 1. Z-BOOST CAPS ───────────────
+  {
+    name: "Z-Boost Caps",
+    subtitle: "Πολυσυστατικό Σκεύασμα Συστηματικής Αντιοξειδωτικής Υποστήριξης",
+    accentColor: "#2980b9",
+    image: "https://github.com/pzaro/zarkolia-images/blob/main/Zboost%20caps%20duet.png?raw=true",
+    description: "Σύνθετο σκεύασμα έξι συνεργιστικών δραστικών συστατικών που στοχεύει στην αντιστροφή του οξειδωτικού στρες και στην αποκατάσταση της μιτοχονδριακής βιοενεργητικής λειτουργίας σε ιστικό επίπεδο.",
+    dosage: "<strong>Δοσολογία:</strong> 1 κάψουλα την ημέρα, με γεύμα (πρωινό ή μεσημεριανό). Η συγχορήγηση με τροφή ενισχύει την απορρόφηση των λιποφιλικών συστατικών (CoQ10, R-ALA). <br><strong>Διάρκεια:</strong> Ελάχιστη περίοδος 8-12 εβδομάδων για κλινική αξιολόγηση.",
+    indications: [
+      {title:"Ρύθμιση Γλυκόζης Αίματος (Ζάχαρο) & Ευαισθησία στην Ινσουλίνη", text:"Συμβάλλει στη φυσιολογική ρύθμιση των επιπέδων γλυκόζης και υποστηρίζει την κυτταρική απόκριση στην ινσουλίνη. Κατάλληλο σε άτομα με προδιάθεση μεταβολικής δυσλειτουργίας."},
+      {title:"Μείωση της Κόπωσης & Ενεργειακός Μεταβολισμός", text:"Συμβάλλει στη μείωση της κούρασης και της εξάντλησης. Υποστηρίζει τη φυσιολογική παραγωγή κυτταρικής ενέργειας (ATP) σε σύνδρομα χρόνιας/μεταϊικής κόπωσης (Long COVID)."},
+      {title:"Φυσιολογική Λειτουργία Θυρεοειδούς", text:"Το Σελήνιο συμβάλλει στη φυσιολογική παραγωγή θυρεοειδικών ορμονών και στη φυσιολογική λειτουργία του θυρεοειδούς αδένα (EU Reg. 432/2012)."},
+      {title:"Υποστήριξη Καρδιαγγειακής Λειτουργίας", text:"Προστατεύει τα κυτταρικά λιπίδια από την οξειδωτική βλάβη. Συμβάλλει στη διατήρηση φυσιολογικών επιπέδων χοληστερίνης και αρτηριακής πίεσης."},
+      {title:"Ηπατική Αποτοξίνωση & Φυσιολογική Λειτουργία", text:"Υποστηρίζει τη φυσιολογική ηπατική αποτοξίνωση μέσω της σύνθεσης γλουταθειόνης. Χρήσιμο σε άτομα με ηπατικό λίπος ή μετά από επιβάρυνση από αλκοόλ/φάρμακα."},
+      {title:"Φυσιολογική Λειτουργία Ανοσοποιητικού", text:"Ο Ψευδάργυρος και το Σελήνιο συμβάλλουν στη φυσιολογική λειτουργία του ανοσοποιητικού συστήματος. Υποστηρίζει την άμυνα σε εποχιακές λοιμώξεις."},
+    ],
+    ingredients: [
+      {
+        name: "N-Ακετυλο-L-Κυστεΐνη (NAC)",
+        mechanism: "Δότης κυστεΐνης (rate-limiting αμινοξύ) για τη <em>de novo</em> σύνθεση γλουταθειόνης (GSH). Αναστολή IκBα κινάσης → ↓ μεταγραφική ενεργοποίηση NF-κB → ↓ TNF-α, IL-6, IL-1β.",
+        studies: '<a href="https://pubmed.ncbi.nlm.nih.gov/24614644/" target="_blank" class="pubmed-link">PMID: 24614644</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/33517459/" target="_blank" class="pubmed-link">PMID: 33517459</a>'
+      },
+      {
+        name: "Συνένζυμο Q10 (Ubiquinone)",
+        mechanism: "Φορέας ηλεκτρονίων στα Σύμπλοκα I→III της αναπνευστικής αλυσίδας. Δημιουργία πρωτονιακής βαθμίδας για παραγωγή ATP. Λιποφιλικό αντιοξειδωτικό μεμβρανών — αναγέννηση α-τοκοφερόλης.",
+        studies: '<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9449413/" target="_blank" class="pubmed-link">PMC: 9449413</a> · Meta-analysis 13 RCTs, n=1.126'
+      },
+      {
+        name: "α-Λιποϊκό Οξύ (R-ALA)",
+        mechanism: "Αμφίφιλο αντιοξειδωτικό. Ενεργοποίηση AMP-εξαρτώμενης κινάσης (AMPK) → μετατόπιση GLUT4 σε μυϊκή μεμβράνη (ινσουλινομιμητική). Επαγωγή Nrf2/ARE μονοπατιού → HO-1, NQO1.",
+        studies: '<a href="https://pubmed.ncbi.nlm.nih.gov/19664690/" target="_blank" class="pubmed-link">PMID: 19664690</a> · ALADIN trials'
+      },
+      {
+        name: "Ψευδάργυρος (Zn²⁺)",
+        mechanism: "Συμπαράγοντας της Cu/Zn-δισμουτάσης υπεροξειδίου 1 (SOD1): 2 O₂⁻• + 2H⁺ → H₂O₂ + O₂. Δομικός σταθεροποιητής zinc-finger μοτίβων. Bioactivation θυμουλίνης → ωρίμανση Τ-λεμφοκυττάρων.",
+        studies: 'EU Reg. 432/2012 (ανοσοποιητικό, DNA σύνθεση, αντιοξειδωτική προστασία)'
+      },
+      {
+        name: "Σελήνιο (Se)",
+        mechanism: "Ενσωμάτωση ως σεληνοκυστεΐνη σε 25 σεληνοπρωτεΐνες: GPx1-4 (αναγωγή υδροπεροξειδίων), TrxR (οξειδοαναγωγική σηματοδότηση), Αποϊωδινάσες DIO1/2/3 (T4→T3 μετατροπή).",
+        studies: '<a href="https://pubmed.ncbi.nlm.nih.gov/22381456/" target="_blank" class="pubmed-link">PMID: 22381456</a> · Lancet 2012'
+      },
+      {
+        name: "Τζίντζερ (Zingiber officinale)",
+        mechanism: "Gingerols/shogaols: διπλή αναστολή COX-2 & 5-LOX → ↓ PGE₂, ↓ LTB₄. Ανταγωνισμός υποδοχέων 5-HT₃ (αντιεμετική δράση). TRPV1 αγωνιστική δράση στη γαστρεντερική κινητικότητα.",
+        studies: 'EMA HMPC Monograph (EMA/HMPC/577856/2010)'
+      },
+    ]
+  },
 
-    const captureElement = document.getElementById('capture-area');
-    
-    captureElement.style.margin = '0';
-    captureElement.style.boxShadow = 'none';
-    captureElement.style.border = 'none';
+  // ─────────────── 2. ALVEOLAIR SIR ───────────────
+  {
+    name: "Alveolair Sir",
+    subtitle: "Σιρόπι Αναπνευστικής Υποστήριξης & Καταπράυνσης Φάρυγγα",
+    accentColor: "#5dade2",
+    image: "https://raw.githubusercontent.com/pzaro/zarkolia-images/main/Alveolair%20Sir%20fonto.jpg",
+    description: "Φυτικό σιρόπι με στοχευμένη σύνθεση για την ανακούφιση του ανώτερου αναπνευστικού. Συνδυάζει καταπραϋντικές, βλεννολυτικές και αντιφλεγμονώδεις ιδιότητες παραδοσιακών φυτικών εκχυλισμάτων.",
+    dosage: "<strong>Δοσολογία ενηλίκων:</strong> 1-2 κουταλιές σούπας (15-30 mL), 3 φορές την ημέρα. <br><strong>Παιδιά 6-12 ετών:</strong> 1 κουταλιά (10 mL), 3 φορές την ημέρα. <br><strong>Διάρκεια:</strong> 5-10 ημέρες ή μέχρι ύφεσης συμπτωμάτων.",
+    indications: [
+      {title:"Ερεθισμένος Λαιμός & Φαρυγγίτιδα", text:"Συμβάλλει στη συμπτωματική ανακούφιση του ερεθισμένου φάρυγγα και της δυσφορίας στην κατάποση. Δημιουργεί προστατευτικό φιλμ στους βλεννογόνους."},
+      {title:"Ξηρός ή Παραγωγικός Βήχας", text:"Καταπραϋντική δράση στον ερεθιστικό ξηρό βήχα. Βλεννολυτική δράση που διευκολύνει την απομάκρυνση των εκκρίσεων στον παραγωγικό βήχα."},
+      {title:"Λαρυγγίτιδα & Τραχειίτιδα", text:"Συμβάλλει στη μείωση του ερεθισμού των ανώτερων αεραγωγών σε ιογενείς λοιμώξεις (κρυολόγημα, γρίπη)."},
+      {title:"Βρογχίτιδα — Συμπληρωματική Αγωγή", text:"Υποστήριξη της φυσιολογικής λειτουργίας του αναπνευστικού. Καταπραϋντική δράση σε χρόνιες καταστάσεις βρογχικού ερεθισμού."},
+      {title:"Πρόληψη Εποχιακών Λοιμώξεων", text:"Τοπική προστατευτική δράση σε περιόδους αυξημένης έκθεσης σε ιογενείς λοιμώξεις (χειμώνας, σχολική περίοδος)."},
+    ],
+    ingredients: [
+      {
+        name: "Ευκάλυπτος (Eucalyptus globulus)",
+        mechanism: "Κύριο συστατικό: 1,8-κινεόλη (ευκαλυπτόλη). Βλεννολυτική δράση μέσω αύξησης κινητικότητας κροσσωτού επιθηλίου. Αντιμικροβιακή δράση κατά Streptococcus pneumoniae, Haemophilus influenzae.",
+        studies: 'EMA HMPC Monograph · <a href="https://pubmed.ncbi.nlm.nih.gov/24389328/" target="_blank" class="pubmed-link">PMID: 24389328</a>'
+      },
+      {
+        name: "Ιπποφαές (Hippophae rhamnoides)",
+        mechanism: "Πλούσιο σε ωμέγα-7 (παλμιτελαϊκό οξύ), βιταμίνη C, καροτενοειδή και φλαβονοειδή. Επιθηλιακή προστασία βλεννογόνων μέσω αναστολής NF-κB. Ανοσοτροποποιητική δράση μέσω αύξησης IgA στις βλεννογόνες εκκρίσεις.",
+        studies: '<a href="https://pubmed.ncbi.nlm.nih.gov/26365562/" target="_blank" class="pubmed-link">PMID: 26365562</a>'
+      },
+    ]
+  },
 
-    html2canvas(captureElement, {
-      scale: 2, 
-      useCORS: true, 
-      backgroundColor: '#f4f7f6'
-    }).then(canvas => {
-      controls.classList.remove('hide-on-export');
-      captureElement.style.margin = '0 auto';
-      captureElement.style.boxShadow = '0 4px 15px rgba(0,0,0,0.05)';
-      captureElement.style.border = '1px solid #dce4e0';
+  // ─────────────── 3. ZPLAST TOTAL REPAIR ───────────────
+  {
+    name: "Zplast Total Repair Cream",
+    subtitle: "Κρέμα Ολικής Επανόρθωσης Ιστών & Επιδερμίδας",
+    accentColor: "#d4ac0d",
+    image: "https://github.com/pzaro/zarkolia-images/blob/main/Zplast%20Total%20Repair.jpeg?raw=true",
+    description: "Πολυσυστατική φόρμουλα προηγμένης δερματικής αναγέννησης. Επιταχύνει τον πολλαπλασιασμό ινοβλαστών, ενισχύει τον επιδερμικό φραγμό και προωθεί την επούλωση μέσω συνδυασμού φυτικών εκχυλισμάτων και βιοδραστικών μορίων.",
+    dosage: "<strong>Εφαρμογή:</strong> Στην επηρεασμένη περιοχή, 2-3 φορές την ημέρα, σε καθαρό και στεγνό δέρμα. <br><strong>Μετεγχειρητική χρήση:</strong> Έναρξη μετά την αφαίρεση των ραμμάτων. <br><strong>Διάρκεια:</strong> Μέχρι την πλήρη επούλωση (2-6 εβδομάδες).",
+    indications: [
+      {title:"Μετεγχειρητικές Ουλές & Επούλωση Τραυμάτων", text:"Επιταχύνει την επούλωση μετά από χειρουργικές επεμβάσεις. Συμβάλλει στη βελτίωση της ποιότητας της ουλής και στη μείωση του υπερτροφικού σχηματισμού."},
+      {title:"Ατοπική & Ευαισθητοποιημένη Δερματίτιδα", text:"Καταπραϋντική δράση στον κνησμό και την ερυθρότητα. Αποκατάσταση του διαταραγμένου επιδερμικού φραγμού σε εξάρσεις ατοπίας."},
+      {title:"Εγκαύματα Τριβής & Θερμικά Εγκαύματα 1ου-2ου Βαθμού", text:"Αντιφλεγμονώδης και αναζωογονητική δράση. Ηλιακά εγκαύματα, εγκαύματα από αθλητικές δραστηριότητες, ελαφρά θερμικά εγκαύματα."},
+      {title:"Διαβητικό Πόδι & Χρόνιες Πληγές", text:"Υποστηρίζει την επούλωση χρόνιων ελκών και έλκη διαβητικού ποδιού. Προστασία από επιμολύνσεις και προαγωγή κοκκιοποίησης."},
+      {title:"Έγκαυμα Ραδιοθεραπείας", text:"Καταπραϋντική και αναγεννητική δράση σε ασθενείς με δερματικές αντιδράσεις από ακτινοθεραπεία (Grade I-II radiodermatitis)."},
+      {title:"Ραγάδες Δέρματος", text:"Συμβάλλει στη βελτίωση της εμφάνισης πρόσφατων ραγάδων (κύηση, αυξομειώσεις βάρους, εφηβεία)."},
+    ],
+    ingredients: [
+      {
+        name: "Centella Asiatica (Ασιατικός Υδροκότυλος)",
+        mechanism: "Τριτερπενοειδή (ασιατικό οξύ, μαντεκικό οξύ, ασιατικοσίδης): επαγωγή σύνθεσης κολλαγόνου τύπου I και III. Πολλαπλασιασμός ινοβλαστών μέσω TGF-β1 σηματοδότησης. Αγγειογένεση μέσω VEGF.",
+        studies: '<a href="https://pubmed.ncbi.nlm.nih.gov/24796802/" target="_blank" class="pubmed-link">PMID: 24796802</a>'
+      },
+      {
+        name: "Μαστίχα Χίου (Pistacia lentiscus)",
+        mechanism: "Τριτερπένια (μαστιχαδιενοϊκό οξύ): αναστολή NF-κB → μείωση προφλεγμονωδών κυτταροκινών. Αντιμικροβιακή δράση κατά Staphylococcus aureus και H. pylori. EMA HMPC: δερματική φλεγμονή, επούλωση μικρών τραυμάτων.",
+        studies: 'EMA/HMPC/46758/2015 · <a href="https://pubmed.ncbi.nlm.nih.gov/32841707/" target="_blank" class="pubmed-link">PMID: 32841707</a>'
+      },
+      {
+        name: "Υαλουρονικό Οξύ",
+        mechanism: "Δέσμευση έως 1.000x του ίδιου βάρους σε νερό → ενυδάτωση κερατινοκυττάρων. Σηματοδότηση μέσω υποδοχέα CD44 → επαγωγή κερατινοκυτταρικής μετανάστευσης και επιθηλιοποίησης.",
+        studies: '<a href="https://pubmed.ncbi.nlm.nih.gov/27429407/" target="_blank" class="pubmed-link">PMID: 27429407</a>'
+      },
+      {
+        name: "Μέλι (Honey)",
+        mechanism: "Υψηλή ωσμωτικότητα + χαμηλό pH = αντιμικροβιακή δράση. Ενζυμική παραγωγή H₂O₂ (γλυκοζοοξειδάση) — βραδεία απελευθέρωση. Μέθυλο-γλυοξάλη: ευρέως φάσματος αντιμικροβιακή δράση.",
+        studies: 'Cochrane Review · <a href="https://pubmed.ncbi.nlm.nih.gov/25742878/" target="_blank" class="pubmed-link">PMID: 25742878</a>'
+      },
+      {
+        name: "Έλαιο Αβοκάντο (Persea americana)",
+        mechanism: "Πλούσιο σε β-σιτοστερόλη, ολεϊκό οξύ, τοκοφερόλες. Occlusive emollient → μείωση διαεπιδερμικής απώλειας νερού (TEWL). Επαγωγή σύνθεσης κολλαγόνου σε in vivo μοντέλα.",
+        studies: '<a href="https://pubmed.ncbi.nlm.nih.gov/2003886/" target="_blank" class="pubmed-link">PMID: 2003886</a>'
+      },
+      {
+        name: "Ιπποφαές (Sea Buckthorn)",
+        mechanism: "Ω-7 παλμιτελαϊκό οξύ → επιθηλιακή επούλωση. Ρύθμιση έκφρασης ακουαπορινών 3 (AQP3) → επιδερμική ενυδάτωση. Καροτενοειδή → αντιοξειδωτική προστασία.",
+        studies: '<a href="https://pubmed.ncbi.nlm.nih.gov/29605973/" target="_blank" class="pubmed-link">PMID: 29605973</a>'
+      },
+      {
+        name: "Καλαμίνη (Calamine — ZnO)",
+        mechanism: "Σύμπλοκο οξειδίου ψευδαργύρου (ZnO). Στυπτική (astringent) δράση μέσω επιφανειακής κατακρήμνισης πρωτεϊνών. Αντικνησμική και ξηραντική δράση. Ήπια αντιμικροβιακή δράση Zn²⁺.",
+        studies: '<a href="https://pubmed.ncbi.nlm.nih.gov/24506901/" target="_blank" class="pubmed-link">PMID: 24506901</a>'
+      },
+      {
+        name: "Βιταμίνη Ε (α-Tocopherol)",
+        mechanism: "Λιποφιλικό αντιοξειδωτικό μεμβρανών — αναστολή λιπιδικής υπεροξείδωσης. Φωτοπροστατευτική δράση κατά UVB. Συνέργεια με βιταμίνη C και CoQ10.",
+        studies: '<a href="https://pubmed.ncbi.nlm.nih.gov/19735239/" target="_blank" class="pubmed-link">PMID: 19735239</a>'
+      },
+    ]
+  },
 
-      let link = document.createElement('a');
-      link.download = 'Zarkolia_Health_Protocol.png';
-      link.href = canvas.toDataURL("image/png");
-      link.click();
-    }).catch(err => {
-      console.error("Σφάλμα:", err);
-      alert("Λόγω αυστηρών ρυθμίσεων του browser, η εικόνα ίσως δεν μπορεί να αποθηκευτεί αυτόματα. Παρακαλώ χρησιμοποιήστε το Print Screen.");
+  // ─────────────── 4. BRUISE OFF GEL ───────────────
+  {
+    name: "Bruise Off Cream",
+    subtitle: "Στοχευμένη Κρέμα για Μώλωπες, Εκχυμώσεις & Οιδήματα",
+    accentColor: "#e67e22",
+    image: "https://github.com/pzaro/zarkolia-images/blob/main/Bruise%20Off%20%CE%BC%CE%B5%20%CF%86%CF%8C%CE%BD%CF%84%CE%BF.jpg?raw=true",
+    description: "Κρέμα ταχείας απορρόφησης για την άμεση αντιμετώπιση μωλώπων και οιδημάτων. Δρα τοπικά ενισχύοντας τη μικροκυκλοφορία και επιταχύνοντας την απορρόφηση των εξαγγειωμένων ερυθροκυττάρων.",
+    dosage: "<strong>Εφαρμογή:</strong> Στην περιοχή του μώλωπα ή οιδήματος, 3-4 φορές την ημέρα. Μαλακή μάλαξη μέχρι πλήρους απορρόφησης. <br><strong>Έναρξη:</strong> Όσο το δυνατόν συντομότερα μετά τον τραυματισμό. <br><strong>Διάρκεια:</strong> Μέχρι την πλήρη υποχώρηση (3-10 ημέρες).",
+    indications: [
+      {title:"Μώλωπες & Εκχυμώσεις από Χτυπήματα", text:"Άμεση δράση σε μώλωπες από πτώσεις, χτυπήματα ή τραυματισμούς. Μείωση χρόνου εξαφάνισης του μώλωπα κατά 30-50%."},
+      {title:"Μετεπεμβατικά Οιδήματα", text:"Ιδανικό μετά από αισθητικές παρεμβάσεις (botulinum toxin, hyaluronic acid fillers, mesotherapy). Μειώνει την περιφερική οιδηματώδη αντίδραση."},
+      {title:"Μετεγχειρητικά Οιδήματα Πλαστικής Χειρουργικής", text:"Συμπληρωματική χρήση μετά από επεμβάσεις πλαστικής χειρουργικής (ρινοπλαστική, βλεφαροπλαστική). Επιτάχυνση αποκατάστασης."},
+      {title:"Αθλητικές Κακώσεις & Διαστρέμματα", text:"Διαστρέμματα συνδέσμων, θλάσεις, αιματώματα μυϊκής φύσης. Συμπληρωματική χρήση στο πρωτόκολλο R.I.C.E (Rest, Ice, Compression, Elevation)."},
+      {title:"Φλεβίτιδα & Επιπολής Θρομβοφλεβίτιδα", text:"Συμπληρωματική αγωγή στις φλεβικές διαταραχές με τοπική φλεγμονώδη συμμετοχή. Καταπραϋντική και αντιοιδηματική δράση."},
+      {title:"Αιματώματα από Φλεβοκέντηση", text:"Σε ασθενείς με συχνές αιμοληψίες, ενδοφλέβιες χορηγήσεις ή χρόνια χρήση αντιπηκτικών."},
+    ],
+    ingredients: [
+      {
+        name: "Άρνικα (Arnica montana)",
+        mechanism: "Σεσκιτερπενικές λακτόνες (helenalin, dihydrohelenalin): αναστολή NF-κB → ↓ φλεγμονώδης απόκριση. Αναστολή πολλαπλασιασμού ενεργοποιημένων αιμοπεταλίων. Αύξηση μικροκυκλοφορίας.",
+        studies: '<a href="https://pubmed.ncbi.nlm.nih.gov/21130138/" target="_blank" class="pubmed-link">PMID: 21130138</a> · EMA HMPC Monograph'
+      },
+      {
+        name: "Βιταμίνη Κ (Phytomenadione)",
+        mechanism: "Τοπική απορρόφηση → επιτάχυνση πήξης σε εξαγγειωμένα ερυθροκύτταρα. Μείωση εξαγγείωσης μέσω σταθεροποίησης τοιχωμάτων τριχοειδών. Αποτελεσματικότητα τεκμηριωμένη σε RCT μετά laser/cosmetic procedures.",
+        studies: '<a href="https://pubmed.ncbi.nlm.nih.gov/14971549/" target="_blank" class="pubmed-link">PMID: 14971549</a>'
+      },
+      {
+        name: "Εσπεριδίνη (Hesperidin) & Διοσμίνη",
+        mechanism: "Φλαβονοειδή με αγγειοτονωτική δράση: μείωση τριχοειδικής διαπερατότητας. Αναστολή 5-LOX και COX-2. Σταθεροποίηση μεμβράνης λυσοσωμάτων σε ενδοθηλιακά κύτταρα.",
+        studies: '<a href="https://pubmed.ncbi.nlm.nih.gov/22253746/" target="_blank" class="pubmed-link">PMID: 22253746</a>'
+      },
+      {
+        name: "Hyaluronic Acid (Υαλουρονικό Οξύ)",
+        mechanism: "Δημιουργία προστατευτικού υδρογέλη στην επιδερμίδα. Αντιφλεγμονώδης δράση μέσω CD44. Επιτάχυνση μετανάστευσης κερατινοκυττάρων στις περιοχές μικροτραυματισμού.",
+        studies: '<a href="https://pubmed.ncbi.nlm.nih.gov/22253746/" target="_blank" class="pubmed-link">PMID: 22253746</a>'
+      },
+    ]
+  },
+
+  // ─────────────── 5. ZPLAST CREAM ───────────────
+  {
+    name: "Zplast Cream",
+    subtitle: "Καταπραϋντική Κρέμα Καθημερινής Δερματικής Προστασίας",
+    accentColor: "#7f8c8d",
+    image: "https://github.com/pzaro/zarkolia-images/blob/main/ZplastCream%20100gr.jpg?raw=true",
+    description: "Δερμοκαλλυντική φόρμουλα ευρέως φάσματος για την καταπραϋντική φροντίδα του ευαισθητοποιημένου δέρματος. Συνδυάζει παραδοσιακά φυτικά εκχυλίσματα με βιοδραστικά συστατικά για τοπική προστασία και ενυδάτωση.",
+    dosage: "<strong>Εφαρμογή:</strong> Στην προς θεραπεία περιοχή, 2-3 φορές την ημέρα. <br><strong>Παιδιά &gt;2 ετών:</strong> Ασφαλής χρήση. <br><strong>Διάρκεια:</strong> Σύμφωνα με τις κλινικές ανάγκες — από εφάπαξ χρήση έως καθημερινή προληπτική εφαρμογή.",
+    indications: [
+      {title:"Δέρμα με Τάση Ατοπίας ή Ψωρίασης", text:"Λειτουργεί ως αναλιπαντικό για την αναπλήρωση μεσοκυττάριων λιπιδίων. Συμβάλλει στη μείωση της ξηρότητας και της απολέπισης σε άτομα με ατοπική δερματίτιδα ή ψωρίαση."},
+      {title:"Επιφανειακά Εγκαύματα & Ηλιακά Εγκαύματα", text:"Άμεση κοσμητολογική ανακούφιση. Δημιουργία προστατευτικού μικροπεριβάλλοντος που αποτρέπει την απώλεια υγρασίας."},
+      {title:"Έγκαυμα από Ραδιοθεραπεία", text:"Καταπραϋντική φροντίδα σε δερματικές αντιδράσεις από ακτινοθεραπεία. Μείωση κνησμού και αίσθησης καύσου."},
+      {title:"Τοπική Δερματική Δυσφορία", text:"Μετά από μηχανική τριβή (αθλητικές δραστηριότητες, σκαφάνδρα), μικροτραυματισμούς ή ερεθισμούς από ξύρισμα."},
+      {title:"Δερματίτιδα Επαφής", text:"Καταπραϋντική φροντίδα σε ηπιότερες μορφές δερματίτιδας από επαφή με ερεθιστικές ουσίες ή αλλεργιογόνα."},
+      {title:"Πρόληψη Επιμολύνσεων", text:"Δημιουργεί φυσικό φραγμό προστασίας στις μικρές πληγές. Συμβάλλει στην αποτροπή δευτερογενών βακτηριακών επιμολύνσεων."},
+    ],
+    ingredients: [
+      {
+        name: "Μαστίχα Χίου (Pistacia lentiscus)",
+        mechanism: "Τριτερπενικά οξέα: αναστολή NF-κB → ↓ προφλεγμονώδης απόκριση. Σε πειραματικά μοντέλα ατοπικής δερματίτιδας: ↓ SCORAD, ↓ TEWL.",
+        studies: 'EMA/HMPC/46758/2015 · <a href="https://pubmed.ncbi.nlm.nih.gov/32841707/" target="_blank" class="pubmed-link">PMID: 32841707</a>'
+      },
+      {
+        name: "Βαλσαμόχορτο (Hypericum perforatum)",
+        mechanism: "Υπερφορίνη: ενεργοποίηση καναλιών TRPC6 σε κερατινοκύτταρα → εισροή Ca²⁺ → κερατινοκυτταρική διαφοροποίηση. RCT ατοπικής δερματίτιδας: ↓ SCORAD ~50% vs placebo.",
+        studies: '<a href="https://pubmed.ncbi.nlm.nih.gov/12557748/" target="_blank" class="pubmed-link">PMID: 12557748</a>'
+      },
+      {
+        name: "Μέλι (Honey)",
+        mechanism: "Υψηλή ωσμωτικότητα, χαμηλό pH. Ενζυμική παραγωγή H₂O₂. Cochrane Review: τεκμηριωμένη χρήση στην επούλωση επιφανειακών τραυμάτων και εγκαυμάτων μερικού πάχους.",
+        studies: 'Cochrane Review · <a href="https://pubmed.ncbi.nlm.nih.gov/25742878/" target="_blank" class="pubmed-link">PMID: 25742878</a>'
+      },
+      {
+        name: "Καλαμίνη (ZnO)",
+        mechanism: "Στυπτική δράση μέσω κατακρήμνισης επιφανειακών πρωτεϊνών. Αντικνησμική και ξηραντική δράση. Ήπια αντιμικροβιακή δράση Zn²⁺. Κλασική, χρόνια εδραιωμένη παρέμβαση.",
+        studies: '<a href="https://pubmed.ncbi.nlm.nih.gov/24506901/" target="_blank" class="pubmed-link">PMID: 24506901</a>'
+      },
+      {
+        name: "Καλέντουλα (Calendula officinalis)",
+        mechanism: "Φλαβονοειδή (κερκετίνη, ισοραμνετίνη), τριτερπενικές αλκοόλες. Αναστολή COX & LOX → ↓ προφλεγμονώδη εικοσανοειδή. Φάση III RCT: ↓ ακτινοδερματίτιδα 41% vs 63% (control), p&lt;0.001.",
+        studies: '<a href="https://pubmed.ncbi.nlm.nih.gov/15084710/" target="_blank" class="pubmed-link">PMID: 15084710</a>'
+      },
+      {
+        name: "Έλαιο Αβοκάντο (Avocado Oil)",
+        mechanism: "Occlusive emollient: μείωση διαεπιδερμικής απώλειας νερού (TEWL). Πλούσιο σε ελαϊκό οξύ, β-σιτοστερόλη, τοκοφερόλες. Συμβολή στην ενυδάτωση κερατινοειδούς στιβάδας.",
+        studies: '<a href="https://pubmed.ncbi.nlm.nih.gov/29280987/" target="_blank" class="pubmed-link">PMID: 29280987</a>'
+      },
+      {
+        name: "Ιπποφαές (Sea Buckthorn)",
+        mechanism: "Ω-7 παλμιτελαϊκό οξύ: αντιφλεγμονώδης σε προκλινικά μοντέλα. Ρύθμιση ακουαπορινών 3 (AQP3) → ενίσχυση επιδερμικής ενυδάτωσης.",
+        studies: '<a href="https://pubmed.ncbi.nlm.nih.gov/29605973/" target="_blank" class="pubmed-link">PMID: 29605973</a>'
+      },
+    ]
+  },
+];
+
+// ═══════════════════════════════════════════════════════════
+// STATE & RENDERING
+// ═══════════════════════════════════════════════════════════
+let currentIndex = 0;
+
+function renderCard(index) {
+  const p = products[index];
+  const container = document.getElementById('cardContainer');
+  
+  let indicationsHTML = p.indications.map(ind => `
+    <div class="indication-item">
+      <strong>${ind.title}</strong>
+      ${ind.text}
+    </div>
+  `).join('');
+  
+  let ingredientsHTML = p.ingredients.map(ing => `
+    <tr>
+      <td style="font-weight:bold;color:${p.accentColor};width:25%;">${ing.name}</td>
+      <td style="width:55%;"><span class="mechanism">${ing.mechanism}</span></td>
+      <td style="width:20%;">${ing.studies}</td>
+    </tr>
+  `).join('');
+  
+  container.innerHTML = `
+    <div class="card" style="--accent-color:${p.accentColor};">
       
-      controls.classList.remove('hide-on-export');
-      captureElement.style.margin = '0 auto';
-      captureElement.style.boxShadow = '0 4px 15px rgba(0,0,0,0.05)';
-      captureElement.style.border = '1px solid #dce4e0';
-    });
+      <div class="product-header">
+        <div class="product-img-wrapper">
+          <img src="${p.image}" alt="${p.name}" class="product-img" crossorigin="anonymous">
+        </div>
+        <div class="product-title-area">
+          <h2>${p.name}</h2>
+          <p class="product-subtitle">${p.subtitle}</p>
+          <p class="product-desc">${p.description}</p>
+        </div>
+      </div>
+      
+      <div class="section">
+        <div class="section-title">💊 Δοσολογία & Τρόπος Χρήσης</div>
+        <div class="dosage-box">${p.dosage}</div>
+      </div>
+      
+      <div class="section">
+        <div class="section-title">🎯 Κλινικές Ενδείξεις</div>
+        <div class="indications-grid">
+          ${indicationsHTML}
+        </div>
+      </div>
+      
+      <div class="section">
+        <div class="section-title">🔬 Δραστικά Συστατικά · Μηχανισμός Δράσης · Μελέτες</div>
+        <table class="ingredients-table">
+          <thead>
+            <tr>
+              <th>Συστατικό</th>
+              <th>Μηχανισμός Δράσης</th>
+              <th>Τεκμηρίωση</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${ingredientsHTML}
+          </tbody>
+        </table>
+      </div>
+      
+      <div class="disclaimer">
+        <strong>Νομικό Σημείωμα:</strong> Όλες οι ενδείξεις διατυπώνονται σύμφωνα με EU Reg. 1924/2006 &amp; 432/2012. Τα προϊόντα είναι διατροφικά συμπληρώματα/δερμοκαλλυντικά κατά EU Reg. 178/2002 &amp; 1223/2009. Δεν αντικαθιστούν ιατρική θεραπεία. Συμβουλευθείτε τον ιατρό σας πριν τη χρήση σε εγκυμοσύνη, γαλουχία ή σε συγχορήγηση με φαρμακευτική αγωγή.
+      </div>
+      
+    </div>
+  `;
+  
+  // Update counter and dots
+  document.getElementById('counter').textContent = `${index + 1} / ${products.length}`;
+  renderDots(index);
+  
+  // Update button states
+  document.getElementById('prevBtn').disabled = (index === 0);
+  document.getElementById('nextBtn').disabled = (index === products.length - 1);
+}
+
+function renderDots(activeIndex) {
+  const dotsContainer = document.getElementById('dots');
+  dotsContainer.innerHTML = '';
+  for (let i = 0; i < products.length; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'dot' + (i === activeIndex ? ' active' : '');
+    dot.onclick = () => { currentIndex = i; renderCard(i); };
+    dotsContainer.appendChild(dot);
   }
+}
+
+function nextProduct() {
+  if (currentIndex < products.length - 1) {
+    currentIndex++;
+    renderCard(currentIndex);
+  }
+}
+
+function prevProduct() {
+  if (currentIndex > 0) {
+    currentIndex--;
+    renderCard(currentIndex);
+  }
+}
+
+// Keyboard navigation
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowLeft') prevProduct();
+  if (e.key === 'ArrowRight') nextProduct();
+});
+
+// ═══════════════════════════════════════════════════════════
+// EXPORT FUNCTIONS
+// ═══════════════════════════════════════════════════════════
+function exportCurrentCard() {
+  const card = document.querySelector('.card');
+  if (!card) return;
+  
+  html2canvas(card, {
+    scale: 2,
+    useCORS: true,
+    backgroundColor: '#ffffff'
+  }).then(canvas => {
+    const link = document.createElement('a');
+    link.download = `Zarkolia_${products[currentIndex].name.replace(/\s+/g, '_')}.png`;
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  }).catch(err => {
+    alert('Σφάλμα εξαγωγής: ' + err.message);
+  });
+}
+
+async function exportAllCards() {
+  const original = currentIndex;
+  for (let i = 0; i < products.length; i++) {
+    currentIndex = i;
+    renderCard(i);
+    await new Promise(r => setTimeout(r, 800)); // wait for images to load
+    
+    const card = document.querySelector('.card');
+    await new Promise((resolve, reject) => {
+      html2canvas(card, {scale: 2, useCORS: true, backgroundColor: '#ffffff'})
+        .then(canvas => {
+          const link = document.createElement('a');
+          link.download = `Zarkolia_${i+1}_${products[i].name.replace(/\s+/g, '_')}.png`;
+          link.href = canvas.toDataURL('image/png');
+          link.click();
+          resolve();
+        }).catch(reject);
+    });
+    await new Promise(r => setTimeout(r, 500));
+  }
+  currentIndex = original;
+  renderCard(original);
+  alert('✓ Εξαγωγή ολοκληρώθηκε! Ελέγξτε τον φάκελο Λήψεων.');
+}
+
+// Initialize
+renderCard(0);
 </script>
 
 </body>
